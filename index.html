@@ -24,7 +24,7 @@
             --text-secondary: #8b949e;
             --border: rgba(88, 166, 255, 0.3);
             --grid-color: rgba(88, 166, 255, 0.05);
-            --terminal-prompt: #bc8cff;
+            --terminal-prompt: #bc8cff; /* Purple prompt color */
         }
 
         body {
@@ -174,7 +174,7 @@
         }
 
         .prompt {
-            color: var(--terminal-prompt);
+            color: var(--terminal-prompt); /* Updated to purple */
             margin-right: 0.5rem;
         }
 
@@ -443,13 +443,14 @@
             }
         }
 
+        /* FIXES FOR TERMINAL ANIMATION */
         .terminal-content p {
             margin-bottom: 1rem;
-            min-height: 1.6rem;
+            min-height: 1.6rem; /* Maintain consistent line height */
         }
         
         .command-line-container {
-            min-height: 3.2rem;
+            min-height: 3.2rem; /* Fixed height for 2 lines */
             display: flex;
             align-items: center;
         }
@@ -458,64 +459,6 @@
             height: 1rem;
             display: block;
             content: "";
-        }
-
-        /* Hosting instructions */
-        .hosting-instructions {
-            background: var(--terminal-bg);
-            border: 1px solid var(--border);
-            border-radius: 5px;
-            padding: 2rem;
-            margin: 3rem 0;
-            font-family: 'Share Tech Mono', monospace;
-        }
-        
-        .hosting-instructions h3 {
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-        }
-        
-        .hosting-steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-        
-        .hosting-step {
-            background: rgba(5, 15, 30, 0.5);
-            padding: 1.5rem;
-            border-radius: 5px;
-            border: 1px solid var(--border);
-        }
-        
-        .hosting-step h4 {
-            color: var(--secondary);
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-        }
-        
-        .hosting-step ol {
-            padding-left: 1.5rem;
-            color: var(--text-secondary);
-        }
-        
-        .hosting-step li {
-            margin-bottom: 0.8rem;
-            line-height: 1.5;
-        }
-        
-        .hosting-step li:last-child {
-            margin-bottom: 0;
-        }
-        
-        .code-block {
-            background: rgba(0, 0, 0, 0.3);
-            border-left: 3px solid var(--primary);
-            padding: 0.5rem 1rem;
-            margin: 0.5rem 0;
-            font-family: monospace;
-            overflow-x: auto;
         }
     </style>
 </head>
@@ -546,8 +489,8 @@
                     <div class="command-line-container">
                         <p><span class="prompt">root@alexwhitehouse:~$</span> <span class="command">status --consulting</span><span class="cursor"></span></p>
                     </div>
-                    <span class="spacer"></span>
-                    <p>> TECH CONSULTING SERVICES: ONLINE</p>
+                    <span class="spacer"></span> <!-- Added spacer -->
+                    <p>> TECHNOLOGY CONSULTING SERVICES: ONLINE</p>
                     <p>> SECURE CONNECTION ESTABLISHED</p>
                     <br>
                     <p>> ACTIVE SERVICES:</p>
@@ -642,15 +585,104 @@
                 <div class="stat-number">27</div>
                 <div class="stat-label">Technologies Mastered</div>
             </div>
+            <!-- Client retention stat removed -->
         </div>
 
         <section id="contact" class="contact">
-            <h2>Ready to Transform Your Technology?</h2>
-            <p>Connect with me to discuss how we can leverage cloud, Kubernetes, and custom solutions to drive your business forward.</p>
+            <h2>Ready to Transform Your Business?</h2>
+            <p>Connect with me to discuss how we can leverage web design, cloud and custom solutions to drive your business forward.</p>
             <a href="mailto:contact@alexwhitehouse.dev" class="btn">contact@alexwhitehouse.dev</a>
         </section>
 
-        <!-- Hosting Instructions Section -->
-        <section class="hosting-instructions">
-            <h3>Deployment Instructions</h3>
-            <div class="host
+        <footer>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-docker"></i></a>
+            </div>
+            <div class="logo">AlexWhitehouse<span>.dev</span></div>
+            <p>&copy; 2025 Built in the United Kingdom</p>
+        </footer>
+    </div>
+
+    <script>
+        // Create matrix code background effect
+        const matrixCode = document.getElementById('matrixCode');
+        const chars = "010101010110100101101110011000010111001001111001";
+        const columnCount = 80;
+        
+        for (let i = 0; i < columnCount; i++) {
+            const column = document.createElement('div');
+            column.classList.add('matrix-column');
+            column.style.setProperty('--delay', Math.random() * 15);
+            
+            const lineCount = 25 + Math.floor(Math.random() * 20);
+            for (let j = 0; j < lineCount; j++) {
+                const char = chars.charAt(Math.floor(Math.random() * chars.length));
+                const charSpan = document.createElement('span');
+                charSpan.textContent = char;
+                charSpan.style.color = `rgba(88, 166, 255, ${0.1 + Math.random() * 0.2})`;
+                charSpan.style.display = 'block';
+                column.appendChild(charSpan);
+            }
+            
+            matrixCode.appendChild(column);
+        }
+        
+        // Simulate typing effect in terminal
+        const commands = [
+            "analyze --infrastructure",
+            "deploy --kubernetes_cluster",
+            "optimize --cloud_performance",
+            "design --solution_architecture"
+        ];
+        
+        let currentCommand = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let commandElement = document.querySelector('.command');
+        let cursorElement = document.querySelector('.cursor');
+        
+        function typeCommand() {
+            const currentText = commands[currentCommand].substring(0, charIndex);
+            commandElement.textContent = currentText;
+            
+            if (!isDeleting) {
+                charIndex++;
+                if (charIndex > commands[currentCommand].length) {
+                    isDeleting = true;
+                    setTimeout(typeCommand, 2000);
+                    return;
+                }
+            } else {
+                charIndex--;
+                if (charIndex === 0) {
+                    isDeleting = false;
+                    currentCommand = (currentCommand + 1) % commands.length;
+                }
+            }
+            
+            const speed = isDeleting ? 50 : 100;
+            setTimeout(typeCommand, speed);
+        }
+        
+        // Start typing effect after initial display
+        setTimeout(typeCommand, 3000);
+        
+        // Add smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
