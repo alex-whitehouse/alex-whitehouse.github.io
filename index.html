@@ -24,7 +24,7 @@
             --text-secondary: #8b949e;
             --border: rgba(88, 166, 255, 0.3);
             --grid-color: rgba(88, 166, 255, 0.05);
-            --terminal-prompt: #bc8cff; /* Purple prompt color */
+            --terminal-prompt: #bc8cff;
         }
 
         body {
@@ -174,7 +174,7 @@
         }
 
         .prompt {
-            color: var(--terminal-prompt); /* Updated to purple */
+            color: var(--terminal-prompt);
             margin-right: 0.5rem;
         }
 
@@ -424,6 +424,30 @@
             }
         }
 
+        /* FIXES FOR TERMINAL ANIMATION */
+        .terminal-content p {
+            margin-bottom: 1rem;
+            min-height: 1.6rem;
+        }
+        
+        .command-line-container {
+            min-height: 3.2rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .terminal-content .spacer {
+            height: 1rem;
+            display: block;
+            content: "";
+        }
+        
+        /* Active services section */
+        .active-services {
+            transition: all 0.3s ease;
+        }
+
+        /* Mobile-specific styles */
         @media (max-width: 768px) {
             .hero {
                 grid-template-columns: 1fr;
@@ -436,29 +460,60 @@
             
             nav ul {
                 gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
             }
             
             .hero-content h1 {
                 font-size: 2.2rem;
             }
+            
+            /* Hide active services on mobile */
+            .active-services {
+                display: none;
+            }
+            
+            /* Adjust terminal height */
+            .terminal {
+                min-height: 300px;
+            }
+            
+            /* Center stats */
+            .stats {
+                grid-template-columns: 1fr;
+                max-width: 300px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            /* Adjust service grid */
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
-        /* FIXES FOR TERMINAL ANIMATION */
-        .terminal-content p {
-            margin-bottom: 1rem;
-            min-height: 1.6rem; /* Maintain consistent line height */
-        }
-        
-        .command-line-container {
-            min-height: 3.2rem; /* Fixed height for 2 lines */
-            display: flex;
-            align-items: center;
-        }
-        
-        .terminal-content .spacer {
-            height: 1rem;
-            display: block;
-            content: "";
+        @media (max-width: 480px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .terminal-header {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: flex-start;
+            }
+            
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
@@ -482,25 +537,30 @@
         <section class="hero">
             <div class="terminal">
                 <div class="terminal-header">
-                    <div>Terminal v2.1.4</div>
+                    <div>Terminal v2.1.8  </div>
                     <div>Connection: Secure <span class="pulse"></span></div>
                 </div>
                 <div class="terminal-content">
                     <div class="command-line-container">
                         <p><span class="prompt">root@alexwhitehouse:~$</span> <span class="command">status --consulting</span><span class="cursor"></span></p>
                     </div>
-                    <span class="spacer"></span> <!-- Added spacer -->
+                    <span class="spacer"></span>
                     <p>> TECHNOLOGY CONSULTING SERVICES: ONLINE</p>
                     <p>> SECURE CONNECTION ESTABLISHED</p>
                     <br>
-                    <p>> ACTIVE SERVICES:</p>
-                    <p>> - Cloud Infrastructure & Migration</p>
-                    <p>> - Kubernetes Orchestration</p>
-                    <p>> - Solution Architecture</p>
-                    <p>> - WordPress Web Design</p>
-                    <p>> - Custom Web Development</p>
-                    <p>> - Enterprise Software Solutions</p>
-                    <br>
+                    
+                    <!-- Active services section - hidden on mobile -->
+                    <div class="active-services">
+                        <p>> ACTIVE SERVICES:</p>
+                        <p>> - Cloud Infrastructure & Migration</p>
+                        <p>> - Kubernetes Orchestration</p>
+                        <p>> - Solution Architecture</p>
+                        <p>> - WordPress Web Design</p>
+                        <p>> - Custom Web Development</p>
+                        <p>> - Enterprise Software Solutions</p>
+                        <br>
+                    </div>
+                    
                     <p><span class="prompt">root@alexwhitehouse:~$</span> <span class="command">connect --client_portal</span></p>
                     <p>> INITIATING SECURE LINK TO CLIENT PORTAL...</p>
                 </div>
@@ -585,12 +645,11 @@
                 <div class="stat-number">27</div>
                 <div class="stat-label">Technologies Mastered</div>
             </div>
-            <!-- Client retention stat removed -->
         </div>
 
         <section id="contact" class="contact">
-            <h2>Ready to Transform Your Business?</h2>
-            <p>Connect with me to discuss how we can leverage web design, cloud and custom solutions to drive your business forward.</p>
+            <h2>Ready to Transform Your Technology?</h2>
+            <p>Connect with me to discuss how we can leverage cloud, Kubernetes, and custom solutions to drive your business forward.</p>
             <a href="mailto:contact@alexwhitehouse.dev" class="btn">contact@alexwhitehouse.dev</a>
         </section>
 
@@ -602,7 +661,7 @@
                 <a href="#"><i class="fab fa-docker"></i></a>
             </div>
             <div class="logo">AlexWhitehouse<span>.dev</span></div>
-            <p>&copy; 2025 Built in the United Kingdom</p>
+            <p>&copy; 2025 - Built in the United Kingdom 🇬🇧</p>
         </footer>
     </div>
 
@@ -683,6 +742,16 @@
                 });
             });
         });
+        
+        // Detect mobile devices
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+        
+        // Add mobile class to body if needed
+        if (isMobile()) {
+            document.body.classList.add('mobile');
+        }
     </script>
 </body>
 </html>
